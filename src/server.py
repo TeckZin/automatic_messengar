@@ -15,4 +15,23 @@ if __name__ == "__main__" :
     print(aws_region)
 
 
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=aws_access_key,
+        aws_secret_access_key=aws_secret_key,
+        region_name=aws_region
+    )
+
+    # --- List all buckets ---
+    print("Buckets:")
+    for bucket in s3.list_buckets()["Buckets"]:
+        print(f" - {bucket['Name']}")
+
+    # --- List objects in a specific bucket ---
+    bucket_name = "sgi-members"
+    print(f"\nObjects in {bucket_name}:")
+    objects = s3.list_objects_v2(Bucket=bucket_name)
+
+
+
 
